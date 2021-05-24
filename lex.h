@@ -36,5 +36,6 @@ struct lex {
 
 int lex_create(struct lex *, int, int, int);
 void lex_delete(struct lex *);
+void lex_print(struct lex *);
 
 #endif

@@ -5,6 +5,7 @@
 #include <stdarg.h>
 
 #include "trace.c"
+#include "nfa.c"
 
 int lex_create(struct lex * lex, int node_max, int edge_max, int span_max) {
     lex->node = malloc(node_max * sizeof(*lex->node));
@@ -45,4 +46,36 @@ void lex_delete(struct lex * lex) {
     free(lex->span);
     free(lex->edge);
     free(lex->node);
+}
+
+void lex_print(struct lex * lex) {
+    int i;
+
+    struct node * n;
+    struct edge * e;
+    struct span * s;
+
+    if(lex->node_len > 1)
+        printf("[node] (%d, %d, %d)\n", lex->node_off, lex->node_len, lex->node_max);
+
+    for(i = 1; i < lex->node_len; i++) {
+        n = lex->node + i;
+        printf("%d: (%d, %d, %d)\n", i, n->edge, n->span, n->flag);
+    }
+
+    if(lex->edge_len > 1)
+        printf("[edge] (%d, %d, %d)\n", lex->edge_off, lex->edge_len, lex->edge_max);
+
+    for(i = 1; i < lex->edge_len; i++) {
+        e = lex->edge + i;
+        printf("%d: (%d, %d)\n", i, e->node, e->next);
+    }
+
+    if(lex->span_len > 1)
+        printf("[span] (%d, %d, %d)\n", lex->span_off, lex->span_len, lex->span_max);
+
+    for(i = 1; i < lex->span_len; i++) {
+        s = lex->span + i;
+        printf("%d: (%d, %d, %d, %d)\n", i, s->a, s->b, s->node, s->next);
+    }
 }
