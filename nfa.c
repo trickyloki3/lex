@@ -27,7 +27,7 @@ static int edge_push(struct lex * lex, int x, int y) {
     struct node * n;
 
     if(lex->edge_len >= lex->edge_max)
-        return panic("out of edge");
+        return trace("out of edge");
 
     i = lex->edge_len;
     e = lex->edge + i;
@@ -48,7 +48,7 @@ static int span_push(struct lex * lex, int a, int b, int x, int y) {
     struct node * n;
 
     if(lex->span_len >= lex->span_max)
-        return panic("out of span");
+        return trace("out of span");
 
     i = lex->span_len;
     s = lex->span + i;
